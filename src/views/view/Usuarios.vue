@@ -293,7 +293,6 @@ export default {
           .doc(item.UsuarioId)
           .delete();
         this.llamarUsuarios();
-        alert("Usuario eliminado")
       } else {
         this.errorEliminacion = "No se puede eliminar un usuario que haya realizado una publicacion";
       }
