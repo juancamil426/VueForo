@@ -58,12 +58,13 @@ export default {
   methods: {
     register() {
       this.error = ''
+      var md5 = require('md5');
       if (this.newUser.name && this.newUser.email && this.newUser.password) {
         this.definirImagen();
         db.collection('usuarios').add({
           Nombre: this.newUser.name,
           Correo: this.newUser.email,
-          Contraseña: this.newUser.password,
+          Contraseña: md5(this.newUser.password),
           Rol: this.newUser.rol,
           Ruta: this.newUser.rutaImagen
 

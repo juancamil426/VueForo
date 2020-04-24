@@ -55,12 +55,13 @@ export default {
   methods: {
     login() {
       this.error = ''
+      var md5 = require('md5');
       if (this.datosLoguear.email && this.datosLoguear.password) {
         db.collection('usuarios').get().then((querySnapshot) => {
             querySnapshot.forEach((doc) => {
 
               if(this.datosLoguear.email == `${doc.data().Correo}` && 
-                 this.datosLoguear.password == `${doc.data().Contraseña}`){
+                 md5(this.datosLoguear.password) == `${doc.data().Contraseña}`){
                  this.userLogueado.nombre= `${doc.data().Nombre}`,
                  this.userLogueado.correo= `${doc.data().Correo}`,
                  this.userLogueado.rol= `${doc.data().Rol}`,

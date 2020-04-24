@@ -1,5 +1,5 @@
 <template>
-  <div class="container mt-50" v-if="user.estado == 'online'">
+  <div class="container mt-50" v-if="user.estado == 'online' && user.rol == '2'">
     <div>
       <v-card
         class="mx-auto container mt-50"
