@@ -34,6 +34,8 @@
               <input class="input" type="text" v-model="userEdit.rol" />
             </div>
           </div>
+          
+          <div class="notification is-danger mt-10" v-if="errorEditar">{{ errorEditar }}</div>
           <v-card-actions>
             <v-spacer></v-spacer>
             <div id="butt">
@@ -164,7 +166,9 @@ export default {
         id: ""
       },
       error: "",
-      errorEliminacion: ""
+      errorEliminacion: "",
+      errorEditar: ""
+
     };
   },
 
@@ -172,17 +176,15 @@ export default {
     crearUsuario() {
       this.error = "";
       this.errorEliminacion = "";
-      if (
-        this.newUser.name &&
-        this.newUser.email &&
-        this.newUser.password &&
-        this.newUser.rol
-      ) {
-        this.definirImagen();
+      var md5 = require('md5');
+      if ( this.newUser.name && this.newUser.email && this.newUser.password && this.newUser.rol) {
+        
+        if(isNaN(this.newUser.rol) == false && this.newUser.rol > 0 && this.newUser.rol < 3){
+          this.definirImagen();
         db.collection("usuarios").add({
           Nombre: this.newUser.name,
           Correo: this.newUser.email,
-          Contraseña: this.newUser.password,
+          Contraseña: md5(this.newUser.password),
           Rol: this.newUser.rol,
           Ruta: this.newUser.rutaImagen
         });
@@ -192,6 +194,10 @@ export default {
         this.newUser.rol = "";
         this.newUser.rutaImagen = "";
         this.llamarUsuarios();
+        }
+        else{
+           this.error = "El rol debe ser 1:Admin o 2:User";
+        }
       } else {
         this.error = "Todos los campos son requeridos";
       }
@@ -230,8 +236,9 @@ export default {
     },
     actualizacionUsuario() {
       var userRef = db.collection("usuarios").doc(this.userEdit.id);
-      this.dialog = false;
-      userRef.update({
+      if(isNaN(this.userEdit.rol) == false && this.userEdit.rol > 0 && this.userEdit.rol < 3)
+      {
+        userRef.update({
         Nombre: this.userEdit.name,
         Correo: this.userEdit.email,
         Rol: this.userEdit.rol
@@ -247,6 +254,12 @@ export default {
         this.userEdit.name,
         this.userEdit.email
       );
+      this.dialog = false;
+      }
+      else{
+        this.errorEditar = "El rol debe ser 1:Admin o 2:User";
+      }
+      
     },
     actualizarPublicaciones(userId, nuevoNombre, nuevoCorreo) {
       db.collection("publicaciones")
