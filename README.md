@@ -1,6 +1,6 @@
 # FORO - Universidad ICESI 
 
-#Juan Camilo Cubillos - Miguel Osorio
+Juan Camilo Cubillos - Miguel Osorio
 
 ## Project setup
 ```
