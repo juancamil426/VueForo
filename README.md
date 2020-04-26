@@ -1,4 +1,6 @@
-# FORO - Universidad ICESI
+# FORO - Universidad ICESI 
+
+#Juan Camilo Cubillos - Miguel Osorio
 
 ## Project setup
 ```
